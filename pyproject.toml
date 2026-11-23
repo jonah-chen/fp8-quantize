@@ -1,0 +1,37 @@
+[project]
+name = "fp8-quantize"
+version = "0.1.0"
+description = "Download a BF16 model from the Hugging Face Hub (or use a local copy), reshard to 4 GB shards, quantize to block-wise FP8, and reshard the result again."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "GPL-3.0-or-later"
+authors = [{ name = "hina" }]
+keywords = ["llm", "quantization", "fp8", "safetensors", "huggingface"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "huggingface_hub>=0.24",
+    "llmcompressor>=0.6.0",
+    "safetensors>=0.4.3",
+    "torch>=2.4",
+    "compressed-tensors>=0.11.0",
+]
+
+[project.scripts]
+fp8-quantize = "fp8_quantize.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["fp8_quantize"]
